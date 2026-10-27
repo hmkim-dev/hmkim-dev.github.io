@@ -1,0 +1,19 @@
+{
+  "id": "/3pl/",
+  "name": "GODEAT 3PL 물류관리",
+  "short_name": "갓잇 3PL",
+  "description": "나우원코리아 3PL 물류관리 · 발주·출고·재고·마감",
+  "lang": "ko",
+  "start_url": "/3pl/?source=app",
+  "scope": "/3pl/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#101827",
+  "theme_color": "#101827",
+  "icons": [
+    { "src": "/3pl/icon-v1-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/3pl/icon-v1-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/3pl/icon-v1-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>갓잇 음,주류 통합사이트</title>
+<meta name="theme-color" content="#1f3b63">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="갓잇 음·주류">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-v1-192.png">
+<link rel="apple-touch-icon" href="icon-v1-192.png">
+<style>
+  /* 앱으로 설치되는 껍데기: 구글 서버의 갓잇 음,주류 통합사이트 화면을 화면 가득 띄움 */
+  html,body{margin:0;height:100%;background:#17305a;font-family:system-ui,-apple-system,'Noto Sans KR',sans-serif}
+  iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#f3f6fb}
+  .load{position:fixed;inset:0;display:grid;place-items:center;color:#fff;font-weight:600;font-size:15px}
+  [hidden]{display:none!important}
+  /* 설치 안내: 설치 가능한 기기에서만, 앱으로 열었을 때는 안 보임 */
+  .inst{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9;display:flex;align-items:center;gap:10px;max-width:calc(100% - 32px);background:#ffffff;color:#1a2233;border:2px solid #1f3b63;border-radius:14px;padding:10px 12px;box-shadow:0 8px 24px rgba(0,0,0,.25);font-size:14px}
+  .inst img{width:40px;height:40px;border-radius:10px;flex:none}
+  .inst b{display:block}
+  .inst button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:9px 14px;cursor:pointer}
+  .inst .go{background:#1f3b63;color:#fff}
+  .inst .x{background:transparent;color:#55606e;padding:9px 8px}
+</style>
+</head>
+<body>
+<div class="load" id="load">갓잇 음,주류 통합사이트 여는 중…</div>
+<iframe id="app" title="갓잇 음,주류 통합사이트" allow="clipboard-write; fullscreen"
+  src="https://script.google.com/macros/s/AKfycbyVNQoX__Om745Sa49vcF5yBTJB-4YbSHGV1mXy3Awx0ZSH2j5RbNH6qohKQSCAoaw/exec?src=app"></iframe>
+<div class="inst" id="inst" hidden role="dialog" aria-label="앱 설치">
+  <img src="icon-v1-192.png" alt="">
+  <span><b>갓잇 음,주류 통합사이트 앱</b><span id="inst-msg">홈 화면에 설치하면 앱처럼 열려요</span></span>
+  <button type="button" class="go" id="inst-go">설치</button>
+  <button type="button" class="x" id="inst-x" aria-label="닫기">✕</button>
+</div>
+<script>
+  document.getElementById('app').addEventListener('load',()=>{ document.getElementById('load').hidden=true; });
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+  const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+  let ask=null; const box=document.getElementById('inst');
+  const closed=()=>{ try{ return localStorage.getItem('gl_inst_x')==='1'; }catch(e){ return false; } };
+  window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); ask=e; if(!standalone&&!closed()) box.hidden=false; });
+  document.getElementById('inst-go').addEventListener('click',async()=>{ if(!ask) return; ask.prompt(); const r=await ask.userChoice.catch(()=>null); ask=null; box.hidden=true; });
+  document.getElementById('inst-x').addEventListener('click',()=>{ box.hidden=true; try{ localStorage.setItem('gl_inst_x','1'); }catch(e){} });
+  window.addEventListener('appinstalled',()=>{ box.hidden=true; });
+</script>
+</body>
+</html>
